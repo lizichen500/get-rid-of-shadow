@@ -1,0 +1,35 @@
+#include<iostream>
+#include<opencv2/opencv.hpp>
+
+using namespace std;
+using namespace  cv;
+
+
+
+int main() {
+	Mat src, gray, frame,gray1;
+	src = imread("F:\\Test_image.jpg");
+	namedWindow("0000",WINDOW_NORMAL);
+	imshow("0000",src);
+	cvtColor(src,gray,COLOR_BGR2GRAY);
+
+	Mat one = Mat::ones(Size(7,7),CV_8UC1);
+	
+	dilate(gray,gray1,one);
+	medianBlur(gray1,frame,21);
+	namedWindow("111",WINDOW_NORMAL);
+	imshow("111",frame);
+	Mat final,final1;
+	absdiff(gray,frame,final);
+	final = 255 - final;
+	namedWindow("222",WINDOW_NORMAL);
+	imshow("222",final);
+	normalize(final,final1,0,255,NORM_MINMAX,CV_8UC1);
+	namedWindow("333",WINDOW_NORMAL);
+	imshow("333",final1);
+
+
+	waitKey();
+
+	return 0;
+}
